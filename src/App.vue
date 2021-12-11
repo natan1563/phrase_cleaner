@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-    </div>
     <router-view/>
   </div>
 </template>
@@ -12,5 +9,17 @@
 </script>
 
 <style>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 90%;
+  border: 1px solid red;
+  margin: 0 auto;
+}
 
 </style>
