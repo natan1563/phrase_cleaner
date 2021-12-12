@@ -34,7 +34,7 @@
           </small>
 
           <small v-if="phraseClean">
-            <span class="textGreen">4 palavrões</span> foram removidos
+            <span class="textGreen">{{ countSwearword }} palavrões</span> foram removidos
           </small>
         </div>
         
@@ -68,6 +68,7 @@ export default {
     return {
       characterCounter: 0,
       textSwearword: '',
+      countSwearword: 0,
       swearwordList: [
         'porra', 
         'merda',
@@ -88,11 +89,20 @@ export default {
   },
   methods: {
     cleanSwearword() {    
+      this.countSwearword = 0
       this.swearwordList.forEach(value => {
         if (this.textSwearword.match(value)) {
-          this.textSwearword = this.textSwearword.replaceAll(value, '****')
+          this.textSwearword = this.textSwearword.replaceAll(value, () => {
+            this.countSwearword++
+            return '****'
+          })
         }
       })
+      
+      if (!this.countSwearword) {
+        alert('Sua frase já está limpinha ;)')
+        return
+      }
 
       this.phraseClean = true
     },
