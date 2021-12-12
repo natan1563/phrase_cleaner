@@ -80,7 +80,7 @@ export default {
   watch: {
    textSwearword: function() {
      if (this.textSwearword.length > 255) {
-       this.textSwearword = this.textSwearword.slice(0, 254)
+       this.textSwearword = this.textSwearword.slice(0, 255)
      }
 
      this.characterCounter = this.textSwearword.length
