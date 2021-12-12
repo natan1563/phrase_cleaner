@@ -9,17 +9,14 @@
       <h3 class="textBlue">Limpe Palavrões de suas frases ;)</h3>
 
       <div id="boxClean">
-        <label v-if="false" for="cleanSwearword">
-          Digite a sua frase
-        </label>
-
-        <span 
-          v-else 
+        <label 
+          for="cleanSwearword"
           id="cleanedPhraseMensage"
-          :class="{'textBlue': false, 'textGreen': true}"
+          :class="phraseClean ? 'textGreen' : 'textBlue'"  
         >
-          Frase limpinha :)
-        </span>
+          <p v-if="!phraseClean">Digite a sua frase</p>
+          <p v-else>Frase limpinha :)</p>
+        </label>
 
         <textarea 
           name="cleanSwearword" 
@@ -27,25 +24,34 @@
           cols="35" 
           rows="5" 
           maxlength="255"
-          :class="{'borderGreen': true, 'textContent': false }"
+          :class="phraseClean ? 'borderGreen' : 'textContent'"
+          v-model="textSwearword"
         ></textarea>
 
         <div id="characterCounter">
           <small>
-            <span id="hotCharacter">178</span>/255 caracteres
+            <span id="hotCharacter">{{ characterCounter }}</span>/255 caracteres
           </small>
 
-          <small v-if="true">
+          <small v-if="phraseClean">
             <span class="textGreen">4 palavrões</span> foram removidos
           </small>
         </div>
         
         <button 
-          class="btnCleanPhrase"
-          :class="{'backgroundBlue': false, 'backgroundGreen': true}"
+          class="btnCleanPhrase backgroundBlue"
+          v-if="!phraseClean"
+          @click="cleanSwearword()"
         >
-          <span v-if="false">Limpar frase</span>
-          <span v-else>Limpar outra frase</span>
+          Limpar frase
+        </button>
+
+        <button 
+          v-else 
+          class="btnCleanPhrase backgroundGreen"
+          @click="cleanNewPhrase"
+        >
+          Limpar outra frase
         </button>
         
         <p id="copyright">Copyright &copy; 2021 - Todos os direitos reservados</p>
@@ -58,6 +64,39 @@
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      characterCounter: 0,
+      textSwearword: '',
+      swearwordList: [
+        'porra', 
+        'merda',
+        'corno',
+        'puto'
+      ],
+      phraseClean: false
+    }
+  },
+  watch: {
+   textSwearword: function() {
+     this.characterCounter = this.textSwearword.length
+   }
+  },
+  methods: {
+    cleanSwearword() {    
+      this.swearwordList.forEach(value => {
+        if (this.textSwearword.match(value)) {
+          this.textSwearword = this.textSwearword.replaceAll(value, '****')
+        }
+      })
+
+      this.phraseClean = true
+    },
+    cleanNewPhrase() {
+      this.phraseClean = false 
+      this.textSwearword = ''
+    }
+  },
 }
 </script>
 
@@ -70,6 +109,10 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
   }
   
+  button {
+    cursor: pointer;
+  }
+
   #logoPhraseCleaner {
     display: flex;
     color: #0945c7;
@@ -114,6 +157,11 @@ export default {
 
   #boxClean textarea {
     box-shadow: 0 2px 3px rgba(10, 10, 10, .1);
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(73, 72, 72);
+    padding: 7px;
+    height: 60px;
   }
 
   .textBlue {
