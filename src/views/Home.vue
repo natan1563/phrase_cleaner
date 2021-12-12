@@ -6,19 +6,47 @@
     </div>
 
     <div id="content">
-      <h3>Limpe Palavrões de suas frases ;)</h3>
+      <h3 class="textBlue">Limpe Palavrões de suas frases ;)</h3>
 
       <div id="boxClean">
-        <label for="cleanSwearword">
+        <label v-if="false" for="cleanSwearword">
           Digite a sua frase
         </label>
 
-        <textarea name="cleanSwearword" id="cleanSwearword" cols="35" rows="5" maxlength="255"></textarea>
+        <span 
+          v-else 
+          id="cleanedPhraseMensage"
+          :class="{'textBlue': false, 'textGreen': true}"
+        >
+          Frase limpinha :)
+        </span>
 
-        <small id="characterCounter">
-          <span id="hotCharacter">178</span>/255 caracteres
-        </small>
-        <button id="btnCleanPhrase">Limpar frase</button>
+        <textarea 
+          name="cleanSwearword" 
+          id="cleanSwearword" 
+          cols="35" 
+          rows="5" 
+          maxlength="255"
+          :class="{'borderGreen': true, 'textContent': false }"
+        ></textarea>
+
+        <div id="characterCounter">
+          <small>
+            <span id="hotCharacter">178</span>/255 caracteres
+          </small>
+
+          <small v-if="true">
+            <span class="textGreen">4 palavrões</span> foram removidos
+          </small>
+        </div>
+        
+        <button 
+          class="btnCleanPhrase"
+          :class="{'backgroundBlue': false, 'backgroundGreen': true}"
+        >
+          <span v-if="false">Limpar frase</span>
+          <span v-else>Limpar outra frase</span>
+        </button>
         
         <p id="copyright">Copyright &copy; 2021 - Todos os direitos reservados</p>
       </div>
@@ -60,10 +88,6 @@ export default {
     margin: 100px 45px;
     max-width: 350px;
   }
-  
-  #content h3 {
-    color: #071d95;
-  }
 
   #hotCharacter {
     color: #f80303;
@@ -77,16 +101,47 @@ export default {
     margin-top: 25px;
   }
 
-  #boxClean label {
-    color: #071d95;
+  #boxClean label,
+  #cleanedPhraseMensage {
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 7px;
   }
+  
+  .textContent {
+    border: 1px solid #CCC;
+  }
 
   #boxClean textarea {
-    border: 1px solid #CCC;
     box-shadow: 0 2px 3px rgba(10, 10, 10, .1);
+  }
+
+  .textBlue {
+    color: #071d95;
+  }
+
+  .textGreen {
+    color: #1adb44;
+    font-weight: bold;
+  }
+
+  .backgroundBlue {
+    background-color: #4176e9;
+  }
+
+  .borderGreen {
+    border: 1px solid #1adb44;
+  }
+
+  .backgroundGreen {
+    background: #1adb44;
+  }
+
+  #characterCounter {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    justify-content: space-between;
   }
 
   #boxClean #characterCounter {
@@ -95,11 +150,10 @@ export default {
     color: rgb(54, 54, 54);
   }
 
-  #btnCleanPhrase {
+  .btnCleanPhrase {
     margin-top: 30px;
     border: none;
     color: #FFF;
-    background: #4176e9;
     border-radius: 4px;
     padding: 7px 0;
     font-size: 12px;
@@ -109,6 +163,6 @@ export default {
     margin-top: 15px;
     text-align: center;
     color: #071d95;
-    font-size: 9px;
+    font-size: 8.5px;
   }
 </style>
