@@ -18,7 +18,6 @@
 body {
   height: 100vh;
   width: 90%;
-  border: 1px solid red;
   margin: 0 auto;
 }
 
